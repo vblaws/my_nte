@@ -107,3 +107,5 @@ long start = System.currentTimeMillis();
 |public int availableProcessors()|获取CPU线程数|
 |public long maxMemory()|JVM虚拟机从系统中获取的总内存大小(单位byte)|
 |pulic long totalMemory()|JVM虚拟机已经获取的内存大小(单位byte)|
+|public long freeMemory()|JVM剩余内存大小(单位byte)|
+|public Process exec(String command)|运行cmd命令|
