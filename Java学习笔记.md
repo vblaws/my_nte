@@ -95,7 +95,7 @@ long start = System.currentTimeMillis();
 ## P158-常用API学习-Runtime
 
 <font size=5>Runtime</font>
-
+//这是一个修改
 >Runtime表示当前虚拟机的运行环境
 
 这个类对象不能自己new,需要使用方法获取
