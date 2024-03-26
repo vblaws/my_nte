@@ -109,3 +109,199 @@ long start = System.currentTimeMillis();
 |pulic long totalMemory()|JVM虚拟机已经获取的内存大小(单位byte)|
 |public long freeMemory()|JVM剩余内存大小(单位byte)|
 |public Process exec(String command)|运行cmd命令|
+
+>温馨提示:如果想要将byte转换为KB或者MB，需要byte / 1024 = KB ,因为1kb=1024byte
+
+```java
+恶搞别人个关机程序
+package JavaP158;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.WindowConstants;
+
+public class JavaP58DemoJFame extends JFrame implements ActionListener {
+    // 将按钮对象定义到成员位置,以便为了调用
+    JButton yesBut = new JButton("帅炸了");
+    JButton midBut = new JButton("我错了");
+    JButton badBut = new JButton("好丑");
+    // 获取系统runtime对象
+
+    public JavaP58DemoJFame() {
+        intitJFame();
+        initView();
+        // 设置显示
+        setVisible(true);
+    }
+
+    public void intitJFame() {
+        // 设置宽高
+        setSize(500, 600);
+        // 设置标题
+        setTitle("恶搞基友");
+        // 设置关闭模式
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        // 设置一直在最上面
+        setAlwaysOnTop(true);
+        // 设置居中
+        setLocationRelativeTo(null);
+        // 取消默认位置
+        setLayout(null);
+    }
+
+    public void initView() {
+        getContentPane().removeAll();
+        JLabel test = new JLabel("你觉得我帅吗");
+
+        // System.out.println(test.getText());
+        test.setBounds(200, 150, 300, 50);
+        // 设置按钮尺寸和位置
+        yesBut.setBounds(100, 250, 300, 50);
+        midBut.setBounds(200, 325, 100, 30);
+        badBut.setBounds(160, 400, 180, 30);
+        // 绑定事件监听
+        yesBut.addActionListener(this);
+        midBut.addActionListener(this);
+        badBut.addActionListener(this);
+        // 将按钮添加到界面中
+        getContentPane().add(yesBut);
+        getContentPane().add(midBut);
+        getContentPane().add(badBut);
+        // 添加提示语
+        getContentPane().add(test);
+        getContentPane().repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // 获取是哪个对象
+        Object object = e.getSource();
+        if (object == yesBut) {
+            showDiwlog("谢谢夸奖");
+        } else if (object == midBut) {
+            showDiwlog("我错了");
+            try {
+                // 执行系统cmd程序
+                Runtime.getRuntime().exec(new String[] { "shutdown", "-a" });
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        } else if (object == badBut) {
+            showDiwlog("你完了");
+            try {
+                // 执行系统cmd程序
+                Runtime.getRuntime().exec(new String[] { "shutdown", "-s", "-t", "100" });
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    public void showDiwlog(String context) {// 跳出弹框
+        JDialog jdialog = new javax.swing.JDialog();
+        // 设置弹窗尺寸
+        jdialog.setSize(200, 150);
+        // 始终再最上面
+        jdialog.setAlwaysOnTop(true);
+        // 设置一直居中
+        jdialog.setLocationRelativeTo(null);
+        // 弹窗不关闭就无法操作下面的界面
+        jdialog.setModal(true);
+        // 设置描述,添加到弹窗里面
+        JLabel warn = new JLabel(context);
+        // 设置描述大小
+        warn.setBounds(0, 0, 200, 150);
+        // 将弹窗添加到弹窗容器内
+        jdialog.getContentPane().add(warn);
+        // 让弹窗显示
+        jdialog.setVisible(true);
+    }
+    执行方法:
+    package JavaP158;
+
+    public class JavaP158Demo {
+        public static void main(String[] args) {
+            new JavaP58DemoJFame();
+        }
+
+    }
+
+}
+
+```
+
+## P159-常用API-Object
+
+- Object类是所有类的顶级父类,所有类间接或直接继承于Object类
+- Object类可以被所有子类访问,所以要学习Object类中的方法
+
+Object构造方法
+|方法名|空参构造|
+|:-:|:-:|
+|public Object()|空参构造|
+|public String toString()|返回对象的字符串表示形式|
+|public Object clone(int a)|对象克隆|
+
+- **toString方法**
+
+```java
+// 1.toString,将对象以字符串格式返回
+        Object object = new Object();
+        String str = object.toString();
+        System.out.println(str);// java.lang.Object@5f5a92bb
+        // 有一个细节:这里并没有写toString,但是直接输出还是跟上面的相同
+        // System:类名
+        // out:静态常量名,这里的final修饰的是引用数据类型,地址值不能变,内容可以变
+        // println():方法名
+        // 参数:标识要输出的内容
+        // 核心逻辑,当我们打印一个对象的时候,底层会调用对象的toString方法,把对象变成字符串,然后再打印再控制台上,打印完毕换行处理
+    
+        System.out.println(object);
+       //下面是图例
+```
+
+ ![alt text](image-4.png)
+![alt text](image-6.png)
+![alt text](image-7.png)
+
+- **equals方法**
+
+>默认比较的是地址值,图例如下
+
+![alt text](image-8.png)
+
+如果不想要比较地址值的话,可以重写equals方法
+
+```java
+       //这是对equals的小练习
+        String s1 = "abc";
+        StringBuilder s2 = new StringBuilder("abc");
+        
+        System.out.println(s1.equals(s2));
+        // 因为equals是被s1调用的，而s1是字符串,调用的是字符串里面的equals方法
+        // 字符串里面的equals方法,先判断参数是否是字符串
+        // 但是s2是StringBuilder的类对象,所以就不相等
+        // 所以就会返回false
+        System.out.println(s2.equals(s1));
+        // 这里equals是被s2调用的,而s2是StringBuilder类对象
+        // 在StringBuilder中,没有重写equals方法
+        // 所以调用的是object中的equals方法
+        // 在object中,==号比较的是地址值
+        // 所以这两个记录地址值不一样,就会返回false
+    }
+```
+
+## 常用API-浅克隆，深克隆，对象工具类Objects
+
+把A对象的属性完全拷贝给B对象,也叫对象拷贝,对象复制
+
+> protected权限修饰符解释
+   总之，当B extends A的时候，在子类B的作用范围内，只能调用本子类B定义的对象的protected方法(该方法从父类A中继承而来)。而不能调用其他A类（A 本身和从A继承）对象的protected方法
