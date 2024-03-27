@@ -305,3 +305,54 @@ Object构造方法
 
 > protected权限修饰符解释
    总之，当B extends A的时候，在子类B的作用范围内，只能调用本子类B定义的对象的protected方法(该方法从父类A中继承而来)。而不能调用其他A类（A 本身和从A继承）对象的protected方法
+
+克隆方式
+
+- 浅克隆:不管对象内部属性是基本数据类型还是引用数据类型,都会完全拷贝过来
+- 深克隆:基本数据类型拷贝过来,字符串复用,引用数据类型会重新创建新的
+
+现在使用深克隆可以使用一个第三方工具Gson，只要导入就可以了
+
+[Gson下载链接](https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.10.1/gson-2.10.1.jar)
+
+使用方式
+
+```java
+// 对象的浅克隆，深克隆和对象工具类Objects
+        int[] data = { 1, 2, 3, 4, 5, 67 };
+        // 1.先创建一个对象
+        User u1 = new User(12, "wx", "123456", "美国大区", data);
+        System.out.println(u1);
+        // 2.进行对象的克隆
+        // 书写细节:重写Object中的clone方法
+        // 让JavaBean类实现Cloneable接口
+        // 创建原对象并调用clone就可以了
+
+        User u2 = (User) u1.clone();
+        System.out.println(u2);
+        // Object中的clone是浅克隆
+        
+        int[] add = u1.getData();
+        add[0] = 100;
+        System.out.println(u1);
+        System.out.println(u2);
+
+        //如果需要进行深克隆,需要重写Object类中的clone方法
+        //或者使用gson外部库
+------------------------------------------
+
+
+        //Gson是一个外部库,需要导入
+        //创建一个对象
+        Gson gson = new Gson();
+        //将对象变成Json字符串
+        String s = gson.toJson(u1);
+        //打印Json字符串
+        System.out.println(s);
+        // 将字符串变回对象,有两个参数，前面是Json字符串，后面是对象的类型
+        User user = gson.fromJson(s, User.class);
+        //打印user对象
+        System.out.println(user);
+```
+
+Objects是一个工具类,提供了一些方法去完成一些功能
