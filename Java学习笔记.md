@@ -342,17 +342,21 @@ Object构造方法
 ------------------------------------------
 
 
-        //Gson是一个外部库,需要导入
-        //创建一个对象
+        /
+        // Gson是一个外部库,需要导入
+        // 创建一个对象
         Gson gson = new Gson();
-        //将对象变成Json字符串
+        // 将对象变成Json字符串
         String s = gson.toJson(u1);
-        //打印Json字符串
+        // 打印Json字符串
         System.out.println(s);
         // 将字符串变回对象,有两个参数，前面是Json字符串，后面是对象的类型
         User user = gson.fromJson(s, User.class);
-        //打印user对象
+        // 打印user对象
         System.out.println(user);
+        // 可以代替深克隆使用
+        User user2 = gson.fromJson(s, User.class);
+        System.out.println(user2);
 ```
 
 Objects是一个工具类,提供了一些方法去完成一些功能
