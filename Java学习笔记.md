@@ -299,7 +299,7 @@ Object构造方法
     }
 ```
 
-## 常用API-浅克隆，深克隆，对象工具类Objects
+## P160-常用API-浅克隆，深克隆，对象工具类Objects
 
 把A对象的属性完全拷贝给B对象,也叫对象拷贝,对象复制
 
@@ -360,3 +360,33 @@ Object构造方法
 ```
 
 Objects是一个工具类,提供了一些方法去完成一些功能
+
+|序号|方法名|说明|
+|:-:|:-:|:-:|
+|1|public static boolean equals(Object a,Object b)|先做非空判断,然后比较两个对象|
+|2|public staic boolean isNull(Object a)|判断对象是否为Null，是则返回true|
+|3|public staic boolean nonNull(Object a)|判断对象是否为Null，是则返回true|
+
+- 1:细节
+
+```java
+// Objects工具类学习
+        Student s1 = new Student("zhangsan", 12);
+        Student soneHalf = null;
+        Student s2 = new Student("zhangsan", 12);
+        // System.out.println(s1.equals(s2));
+        System.out.println(Objects.equals(s1, s2));
+        System.out.println(Objects.equals(soneHalf, s2));
+        // Objects.equals方法细节
+        // 方法底层会判断s1是否为null,如果为Null，直接返回false
+        // 如果s1不为null,那么就利用s1再次调用equals方法
+        // 如果s1是Student类型,所以最终还是会调用Student中的equals方法
+        // 如果没有重写,比较地址值，如果重写了,比较属性值
+
+```
+
+![alt text](image-9.png)
+
+![alt text](image-10.png)
+
+## P161 常用API-BigInteger和BigDecimal
