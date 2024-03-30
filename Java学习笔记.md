@@ -390,3 +390,67 @@ Objects是一个工具类,提供了一些方法去完成一些功能
 ![alt text](image-10.png)
 
 ## P161 常用API-BigInteger和BigDecimal
+
+在Java中,整数有四种类型
+
+|类型|占用字节大小|
+|:-:|:-:|
+|byte|1|
+|short|2|
+|int|4|
+|long|8|
+
+BigInteger构造方法
+|方法名|说明|
+|:-:|:-:|
+|public BigInteger(int num,int Random rnd)|获取随机大整数:范围[0~2的num次方-1]|
+|public BigInteger(String val)|获取指定大的整数|
+|public BigInteger(String val,int radix)|获取指定进制的大整数|
+
+有一个静态方法获取BigInteger对象，内部有优化的:
+public static BigInteger valueOf(long val)
+!注意:对象一旦创建内部的值无法改变不了
+
+BigInteger常见成员方法
+
+|方法名|说明|
+|:-:|:-:|
+|public BigIntegeradd(BigInteger val)|加法|
+|public BigInteger subtract(BigInteger val)|减法|
+|public BigInteger multiply(BigInteger val)|乘法|
+|public BigInteger divide(BigInteger val)|除法,获取商|
+|public BigInteger[] divideAndRemainder(BigInteger val)|除法,获取商和余数|
+|public boolean equals(Object x)|比较是否相同|
+|public BigInteger pow(int exponent)|次幂|
+|public BigInteger max/min(BigInteger val)|返回较大/较小值|
+|public int intValue(BigInteger val)|转为int类型整数,超出范围数据有误|
+
+以下是代码笔记:
+
+```java
+   // BigInteger
+        // 1.获取一个随机大整数
+        BigInteger bigint = new BigInteger(100, new Random());
+        System.out.println(bigint);
+
+        // 2.获取一个指定的大整数
+        BigInteger bigint2 = new BigInteger("4892570235");
+        System.out.println(bigint2);
+
+        // 3.获取一个指定进制的整数
+        BigInteger bigint3 = new BigInteger("1000", 2);
+        System.out.println(bigint3);
+
+        // 4.有一个静态方法获取BigInteger对象，内部有优化的:
+        // public static BigInteger valueOf(long val)
+        // !注意:对象一旦创建内部的值无法改变
+        // 细节:参数是long类型的,比较小
+        // 这里可以获取long类型长度看一下
+        System.out.println("Long类型最大" + Long.MAX_VALUE);
+        // 这个方法对常用数字:-16~16做了优化
+        // 提前把这个范围以内的数字创建好BigInteger对象,如果多次获取不会创建新的对象
+
+        BigInteger bigint4 = BigInteger.valueOf(5000);
+        System.out.println(bigint4);
+        // 只要计算就会产生一个新的BigInteger对象
+```
