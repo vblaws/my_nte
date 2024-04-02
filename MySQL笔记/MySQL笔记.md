@@ -270,17 +270,19 @@ grant all on *.* to 'hxl'@'localhost';//表示给root用户提供所有数据库
 ### 函数
 
 - 字符串函数
+
 |函数名|功能|
 |:-:|:-:|
 |concat(s1,s2,s3)|将s1,s2,s3拼接成一个字符串|
 |lower(str)|将str变成全小写|
 |upper(str)|讲str变成全大写|
-|lpad(str,n,pad)|左填充,用字符串pad对str左填充,达到n个字符长度||lpad(str,n,pad)|左填充,用字符串pad对str左填充,达到n个字符长度|
+|lpad(str,n,pad)|左填充,用字符串pad对str左填充,达到n个字符长度|
 |rpad(str,n,pad)|右填充,用字符串pad对str右填充,达到n个字符长度|
 |trim(str)|去掉头尾的空格|
 |substring(str,start,len)|返回从str字符start位置起,len个长度的字符串|
 
 - 数值函数
+
 |函数名|功能|
 |:-:|:-:|
 |ceil(x)|向下取整|
@@ -290,6 +292,9 @@ grant all on *.* to 'hxl'@'localhost';//表示给root用户提供所有数据库
 |round(x,y)|求参数x的四舍五入值,保留y位小数|
 
 - 日期函数
+
+|函数名|功能|
+|:-:|:-:|
 |||
 |||
 |||
