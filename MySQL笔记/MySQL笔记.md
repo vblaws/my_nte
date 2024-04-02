@@ -4,7 +4,9 @@
 
 ## 安装各个版本的MySQL
 
-pass
+- 在linux下
+
+- 在windows下
 
 ## MySQL数据库的简单使用用和基础介绍
 
@@ -295,12 +297,12 @@ grant all on *.* to 'hxl'@'localhost';//表示给root用户提供所有数据库
 
 |函数名|功能|
 |:-:|:-:|
-|||
-|||
-|||
-|||
-|||
-|||
+|curdate()|返回当前日期|
+|curtime()|返回当前时间|
+|now()|当前日期和时间|
+|year(date)|返回指定date年份|
+|month(date)|获取指定的date月份|
+|day(date)|获取当前日期|
 |||
 |||
 |||
