@@ -92,6 +92,15 @@ makepkg -si
 其余:安装AstroNvim和zsh
 >如果想要使用AstroNvim的话,为了完整的显示,需要下载Nerd Font字体文件
 
+当然你一开始有可能会发现时间怎么不对,所以需要设置时区和打开时间同步服务,命令如下
+
+```shell
+timedatectl set-timezone Asia/Shanghai
+timedatectl set-ntp true
+```
+
+然后你就会发现时间变正常了
+
 ---
 
 本文所有参考的文章
