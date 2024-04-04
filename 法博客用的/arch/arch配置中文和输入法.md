@@ -10,7 +10,7 @@
 !注意:下面的编辑文件用的都是vim,可以使用`sudo pacman -S vim`来下载
 
 1.首先`vim /eyc/locale.gen`打开这个文件
-    - 找到zh_CN UTF-8 UTF-8去掉前面的`#`号,
+    - 找到zh_CN UTF-8 UTF-8,去掉前面的`#`号,
     - 然后执行`sudo locale-gen`这个命令
 
 > 这几条命令的作用是让`arch`支持中文
@@ -29,7 +29,23 @@ ttf-arphic-ukai
 ttf-arphic-uming
 ```
 
-3.最后按下windows键打开菜单栏,点击System setting,
+3.然后重启`sudo reboot now`
+
+4.下面需要配图食用,有箭头指引
+
+![alt text](IMG_20240404_144928.jpg)
+
+![alt text](IMG_20240404_144933.jpg)
+
+![alt text](IMG_20240404_144941.jpg)
+
+![alt text](IMG_20240404_144949.jpg)
+
+![alt text](IMG_20240404_144957.jpg)
+
+![alt text](IMG_20240404_145005.jpg)
+
+![alt text](IMG_20240404_145011.jpg)
 
 ## 第二步就是如何使用中文输入法
 
@@ -57,42 +73,3 @@ GLFW_IM_MODULE=ibus
 - 都设置好了以后,**重启**.点击右下角类似于键盘的东西,然后右键,点击配置
 
 - 在右下角找到添加输入法,找到拼音,添加就可以了
-
-## 使用Arch 用户仓库（AUR）
-
-什么是 AUR？
-
-> AUR 表示 Arch 用户仓库(Arch User Repository)。它是针对基于 Arch 的 Linux 发行版用户的社区驱动的仓库。它包含名为 PKGBUILD 的包描述，它可让你使用 makepkg 从源代码编译软件包，然后通过 pacman（Arch Linux 中的软件包管理器）安装。
-
-在Arch上安装AUR助手
-
-> 假设你要使用 Yay AUR 助手。确保在 Linux 上安装了 git。然后克隆仓库，进入目录并构建软件包。
-
-- 这里首先要将yay文件夹添加777权限
-
-```shell
-chmod 777 yay/
-```
-
-- 再将里面的PKGBUILD添加可执行权限
-
-```shell
-chmod a+x PKGBUILD
-```
-
-然后执行一下命令
-
-```shell
-sudo pacman -S git
-sudo git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-```
-
-其余:安装AstroNvim和zsh
->如果想要使用AstroNvim的话,为了完整的显示,需要下载Nerd Font字体文件
-
----
-
-本文所有参考的文章
-[美化arch](https://www.cnblogs.com/Junglezt/p/16927100.html)
