@@ -4,9 +4,15 @@
 
 ## 安装各个版本的MySQL
 
-- 在linux下
+下载
 
-- 在windows下
+- 在linux下:[MySQL8.3](https://dev.mysql.com/get/Downloads/MySQL-8.3/mysql-8.3.0-linux-glibc2.28-x86_64.tar.xz)
+- 在windows下:[MySQL8.3](https://dev.mysql.com/get/Downloads/MySQL-8.3/mysql-8.3.0-winx64.msi)
+
+安装
+
+- 在linux下,暂时先看[这篇文章](https://blog.csdn.net/qq_44715376/article/details/117838544)
+- 在windows下:直接双击`.msi`安装包就可以了
 
 ## MySQL数据库的简单使用用和基础介绍
 
@@ -212,7 +218,7 @@ rename user 'old_user_name'@'host' to 'new_user_name'@'host';
 |权限类型 |权限说明|
 |:-:|:-:|
 |All/All Privileges|代表全局或者全数据库对象级别的所有权限|
-|Alter查询权限|
+|Alter|查询权限|
 |insert|代表允许修改表结构的权限，但必须要求有create和insert权限配合,如果是rename表名，则要求有alter和drop原表， create和insert新表的权限|
 |Alter routine |代表允许修改或者删除存储过程、函数的权限|
 |Create |代表允许创建新的数据库和表的权限|
@@ -304,11 +310,50 @@ grant all on *.* to 'hxl'@'localhost';//表示给root用户提供所有数据库
 |year(date)|返回指定date年份|
 |month(date)|获取指定的date月份|
 |day(date)|获取当前日期|
-|||
-|||
-|||
-|||
-|||
+|data_add(date,interval expr,type)||
+|datadiff(date1,data2)|返回d1到d2的天数|
+
+- 流程控制函数
+
+|函数名|功能|
+|:-:|:-:|
+|if(expr1,expr2,expr3)|如果expr1为true返回expr2,如果expr1为false,则执行expr2|
+|ifnull(expr1,expr2)|如果expr1是true,返回expr1,如果不是则返回expr2|
+|case when [val1] then [res1] when [val2] then [res2] else [default] end|如果val1为true,则返回res1,如果val2为true,则返回res2,如果都不是则返回else里面的|
+|case expr when [val1] then [res1] when [val2] then [res2] else [default] end|如果expr=val1,返回res1,如果expr=val2,返回res2,如果都不是返回default|
+
+### 约束
+
+概念:约束是作用于表中字段的规则,用于限制存储在表中的数据
+目的:保证数据库中数据正确,有效保证完整型
+|约束|描述|关键字|
+|:-:|:-:|:-:|
+|非空约束|限制该字段数据不为null|not null|
+|唯一约束|保证该字段所有数据唯一|unique|
+|主键约束|主键是一行数据的唯一标识|primary key|
+|默认约束|保证数据时若未指定值,则采取默认值|default 默认值|
+|检查约束|保证字段满足某一个条件|check|
+|外键约束|用于两张表建立连接,保证数据一直完整|foreign key|
+
+演示:
+
+- 外键约束
+
+> 具有外键的表是子表
+> 外键关联的表是父表
+
+下面是代码演示:
+
+两种方式添加外键:
+
+- 方式1:`[constraint <外键名>] foreign key 字段名 [，字段名2，…] references <主表名> 主键列1 [，主键列2，…]`
+
+> 这是在创建表时添加外键
+
+- 方式2:`alter table <数据表名> add constraint <外键名> foreign key(<列名>) references <主表名> (<列名>);`
+
+> 这是创建好表以后,添加外键
+
 
 中间到时候填上去,现在是新的
 
