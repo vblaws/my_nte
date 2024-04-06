@@ -150,7 +150,7 @@ drop database [if exists] db_name;//if exists意思是如果存在
 
 1.0 备份数据库,这些需要在命令行下执行
 
-```shell
+```shellawdawd
 mysqldump -u root -p123456 -d 数据库1,数据库2,数据库n > 文件名.sql
 ```
 
