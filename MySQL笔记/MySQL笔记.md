@@ -308,3 +308,49 @@ grant all on *.* to 'hxl'@'localhost';//表示给root用户提供所有数据库
 |||
 |||
 |||
+
+中间到时候填上去,现在是新的
+
+### 视图-介绍及基本语法
+
+视图(View)是一种虚拟的表。视图中的数据并不在数据库中实际存在，行和列数据来自定义视图的查询中使用的表，并且是在使用视图时动态生成的。
+
+具体介绍:
+视图是一个虚拟表，其内容由查询定义。同真实的表一样，视图包含一系列带有名称的列和行数据。但是，数据库中只存放了视图的定义，而并没有存放视图中的数据，这些数据存放在原来的表中。使用视图查询数据时，数据库系统会从原来的表中取出对应的数据。因此，视图中的数据是依赖于原来的表中的数据的。一旦表中的数据发生改变，显示在视图中的数据也会发生改变。同样对视图的更新，会影响到原来表的数据。
+
+创建视图语法
+
+```sql
+create [or replace] view 视图名称[(列名列表)] as select语句 [with[ cascaded | local] check option]
+```
+
+查看创建视图语句
+
+```sql
+show create view 视图名称;
+```
+
+查看视图数据
+
+```sql
+select * from 视图名称;
+```
+
+修改视图
+方式一
+
+```sql
+create [or replace] view 视图名称[(列名列表)] as select语句 [with[ cascaded | local] check option]
+```
+
+方式二
+
+```sql
+alter view 视图名称[(列名列表)] as select语句 [with[ cascaded | local] check option]
+```
+
+删除视图
+
+```sql
+drop view [if exists] 视图名称[,视图名称]
+```
