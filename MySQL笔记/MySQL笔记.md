@@ -152,10 +152,9 @@ drop database [if exists] db_name;//if exists意思是如果存在
 
 在给字段,表或者数据库取名时,最好加上反引号,否则在某中情况下会有错误
 
-### 备份
+### 备份数据库和表
 
 1.0 备份数据库,这些需要在命令行下执行
-aighaiu erlghaiugheruighreluighsiuerg
 
 ```shell
 mysqldump -u root -p123456 -d 数据库1,数据库2,数据库n > 文件名.sql
@@ -178,6 +177,76 @@ mysqldump -u root -p123456 -d 数据库名 -t 表1,表2 > 文件名.sql
 2.1恢复方法跟上面一样
 
 这一段纸没了,所以缺少了一点
+
+### 导入导出数据
+
+- 导出数据
+
+```sql
+SELECT column1, column2, ...
+INTO OUTFILE 'file_path'
+FROM your_table
+WHERE your_conditions;
+```
+
+导出时有可能会出现`[HY000][1290] The MySQL server is running with the --secure-file-priv option so it cannot execute this statement`这个问题,
+
+其实原因很简单，因为在安装MySQL的时候限制了导入与导出的目录权限。只允许在规定的目录下才能导入。
+
+可以通过以下命令查看secure-file-priv当前的值是什么`SHOW VARIABLES LIKE "secure_file_priv";`
+
+![alt text](image.png)
+
+这是我的效果,说明我只能导出csv文件导出到`C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\`
+
+**解决方案**
+
+问题原因找到了，解决方案因业务需求而定。
+
+- 方案一：
+
+把导入文件放入`secure-file-priv`目前的`value`值对应路径即可。
+
+- 方案二：
+
+把`secure-file-priv`的`value`值修改为准备导入文件的放置路径。
+
+- 方案三：修改配置
+
+去掉导入的目录限制。可修改mysql配置文件（Windows下为my.ini, Linux下的my.cnf），在[mysqld]下面，查看是否有：`secure_file_priv =`
+
+如上这样一行内容，如果没有，则手动添加。如果存在如下`secure_file_priv = /home`
+
+这样一行内容，表示限制为/home文件夹。而如下行:`secure_file_priv =`
+
+这样一行内容，表示不限制目录，等号一定要有，否则mysql无法启动。
+
+修改完配置文件后，重启mysql生效。
+
+这是例子
+
+```sql
+SELECT id, name, email
+INTO OUTFILE '/tmp/user_data.csv' #保存文件的类型和位置
+FIELDS TERMINATED BY ',' # 分隔符
+LINES TERMINATED BY '\n' # 换行符
+FROM users;
+```
+
+- 导入数据
+
+```sql
+mysql> LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl
+```
+
+下面是例子
+
+```sql
+
+mysql> LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl
+  -> FIELDS TERMINATED BY ':'
+  -> LINES TERMINATED BY '\r\n';
+```
 
 ### DCL语句操作
 
@@ -205,7 +274,15 @@ drop user 'user_name'@'host' ;
 - 修改用户密码
 
 ```sql
-alter user 'user_name'@'host' identified with mysql_native_password by 'new password';
+alter user 'user_name'@'host' identified  by 'new password';
+```
+
+在命令提示符下修改
+
+```shell
+
+mysqladmin -u <用户名> -p<旧密码> passoword <新密码>
+
 ```
 
 - 修改用户名
@@ -350,10 +427,9 @@ grant all on *.* to 'hxl'@'localhost';//表示给root用户提供所有数据库
 
 > 这是在创建表时添加外键
 
-- 方式2:`alter table <数据表名> add constraint <外键名> foreign key(<列名>) references <主表名> (<列名>);`
+- 方式2:`alter table <数据表名> add constraint <外键名> foreign key(<列名>) references <主表名> (<列名>)    ;`
 
 > 这是创建好表以后,添加外键
-
 
 中间到时候填上去,现在是新的
 
@@ -400,3 +476,30 @@ alter view 视图名称[(列名列表)] as select语句 [with[ cascaded | local]
 ```sql
 drop view [if exists] 视图名称[,视图名称]
 ```
+
+### 视图-检查选项(cascaded)
+
+```sql
+主要关注``包裹住的
+create [or replace] view 视图名称[(列名列表)] as select语句 `[with[ cascaded | local] check option]`
+with cascaded check option 会向下兼容
+```
+
+总而言之，当视图使用WITH CASCADED CHECK OPTION时，mysql会循环检查视图的规则以及底层视图的规则
+可以利用视图创建视图
+
+```sql
+create or replace view user_v2 as select id,name from user_v1 where id <=20;
+```
+
+### 视图-检查选项(local)
+
+找到当前视图依赖的视图,如果有检查选项则会执行,否则不会检查
+
+这次会插入成功。这是因为v2视图没有任何规则。 v2视图取决于v1视图。 但是，v1视图没有指定检查选项，因此mysql跳过检查v1视图中的规则。我们要注意，在使用WITH CASCADED CHECK OPTION创建的v2视图中，此语句失败。
+
+### 视图-更新
+
+![alt text](image-1.png)
+
+![alt text](image-4.png)
